@@ -58,4 +58,26 @@ export class ProductController {
       return res.status(500).json({ error: error.message || 'Internal server error' });
     }
   }
+
+  static async getById (req: Request, res: Response): Promise<Response> {
+    try {
+      const id = +req.params.id;
+
+      if (!id) {
+        throw new Error('Product id is required!');
+      }
+
+      const product = await ProductService.getById(id);
+
+      if (!product) {
+        throw new Error('Product not found!');
+      }
+
+      return res.status(200).json({ product });
+    } catch (error: any) {
+      console.error({ params: req.body, error });
+
+      return res.status(500).json({ error: error.message || 'Internal server error' });
+    }
+}
 }

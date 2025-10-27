@@ -10,4 +10,10 @@ export class ProductService {
 
     return ({ products });
   }
+
+  static async getById (id: number): Promise<Types.ProductOuput | null> {
+    const product = await ProductModel.findByPk(id);
+
+    return product ?? null;
+  }
 }
