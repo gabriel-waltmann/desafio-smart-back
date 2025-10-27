@@ -2,6 +2,13 @@ import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 import { ProductEntity } from '@/entities/ProductEntity'
 
+
+export interface ProductPaginationAttributes {
+  name?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
 export interface ProductInput extends Optional<ProductEntity, 'id'> {}
 export interface ProductOuput extends Required<ProductEntity> {}
 

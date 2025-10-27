@@ -1,12 +1,29 @@
 import ProductModel, * as Types from '@/db/models/ProductModel';
+import { WhereOptions } from 'sequelize';
+import { ProductEntity } from '@/entities/ProductEntity';
+import { Order, Op } from 'sequelize';
 
 export class ProductService {
   static async create (payload: Types.ProductInput): Promise<Types.ProductOuput>  {
     return await ProductModel.create(payload);
   }
 
-  static async getAll (): Promise<{ products: Types.ProductOuput[] }> {
-    const products = await ProductModel.findAll();
+  static async getAll (payload: Types.ProductPaginationAttributes): Promise<{ products: Types.ProductOuput[] }> {
+    let where: WhereOptions = {};
+
+    if (payload.name) {
+      where = { name: { [Op.match]: payload.name } } as WhereOptions;
+    }
+
+    if (payload.category) {
+      where = { category: { [Op.match]: payload.category } } as WhereOptions;
+    }
+
+    if (payload.minPrice && payload.maxPrice) {
+      where = { price: { [Op.between]: [payload.minPrice, payload.maxPrice] } } as WhereOptions;
+    }
+
+    const products = await ProductModel.findAll({ where });
 
     return ({ products });
   }

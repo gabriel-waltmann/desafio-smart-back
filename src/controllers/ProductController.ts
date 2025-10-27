@@ -49,7 +49,14 @@ export class ProductController {
 
   static async getAll (req: Request, res: Response): Promise<Response> {
     try {
-      const products = await ProductService.getAll();
+      const config: Types.ProductPaginationAttributes = {
+        name: req.query.name ? String(req.query.name) : undefined,
+        category: req.query.category ? String(req.query.category) : undefined,
+        minPrice: req.query.minPrice ? Number.parseFloat(String(req.query.minPrice)) : undefined,
+        maxPrice: req.query.maxPrice ? Number.parseFloat(String(req.query.maxPrice)) : undefined,
+      }
+
+      const products = await ProductService.getAll(config);
 
       return res.status(200).json(products);
     } catch (error: any) {
