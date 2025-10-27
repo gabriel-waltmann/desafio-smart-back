@@ -16,4 +16,14 @@ export class ProductService {
 
     return product ?? null;
   }
+
+  static async update (id: number, payload: Types.ProductInput): Promise<Types.ProductOuput | null>  {
+    const product = await ProductModel.findByPk(id);
+
+    if (!product) return null;
+
+    await product.update(payload);
+
+    return product;
+  }
 }
