@@ -3,4 +3,6 @@ import { Router } from "express";
 
 export const ProductRoutes = Router();
 
-ProductRoutes.post("/", ProductController.create)
+ProductRoutes.get("/", ProductController.getAll);
+
+ProductRoutes.post("/", ProductController.create);

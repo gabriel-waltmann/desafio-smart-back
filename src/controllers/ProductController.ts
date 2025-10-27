@@ -46,4 +46,16 @@ export class ProductController {
       return res.status(500).json({ error: error.message || 'Internal server error' });
     }
   }
+
+  static async getAll (req: Request, res: Response): Promise<Response> {
+    try {
+      const products = await ProductService.getAll();
+
+      return res.status(200).json(products);
+    } catch (error: any) {
+      console.error({ params: req.body, error });
+
+      return res.status(500).json({ error: error.message || 'Internal server error' });
+    }
+  }
 }
