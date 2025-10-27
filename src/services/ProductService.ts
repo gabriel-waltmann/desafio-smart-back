@@ -11,19 +11,29 @@ export class ProductService {
     return ({ products });
   }
 
-  static async getById (id: number): Promise<Types.ProductOuput | null> {
+  static async getById (id: number): Promise<Types.ProductOuput> {
     const product = await ProductModel.findByPk(id);
+
+    if (!product) throw new Error("Product not found")
 
     return product ?? null;
   }
 
-  static async update (id: number, payload: Types.ProductInput): Promise<Types.ProductOuput | null>  {
+  static async update (id: number, payload: Types.ProductInput): Promise<Types.ProductOuput>  {
     const product = await ProductModel.findByPk(id);
 
-    if (!product) return null;
+    if (!product) throw new Error("Product not found")
 
     await product.update(payload);
 
     return product;
+  }
+
+  static async destroy (id: number): Promise<void> {
+    const product = await ProductModel.findByPk(id);
+
+    if (!product) throw new Error("Product not found")
+
+    await product.destroy();
   }
 }

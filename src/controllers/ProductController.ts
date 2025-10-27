@@ -33,13 +33,13 @@ export class ProductController {
         discount: Number.parseFloat(req.body.discount)
       };
 
-      const finance = await ProductService.create(props);
+      const product = await ProductService.create(props);
 
-      if (!finance) {
+      if (!product) {
         throw new Error('Internal server error');
       }
 
-      return res.status(201).json({ finance });
+      return res.status(201).json({ product });
     } catch (error: any) {
       console.error({ params: req.body, error });
 
@@ -123,13 +123,31 @@ export class ProductController {
         discount: Number.parseFloat(req.body.discount)
       };
 
-      const finance = await ProductService.update(id, props);
+      const updatedProduct = await ProductService.update(id, props);
 
-      if (!finance) {
+      if (!product) {
         throw new Error('Internal server error');
       }
 
-      return res.status(201).json({ finance });
+      return res.status(201).json({ product: updatedProduct });
+    } catch (error: any) {
+      console.error({ params: req.body, error });
+
+      return res.status(500).json({ error: error.message || 'Internal server error' });
+    }
+  }
+
+  static async destroy (req: Request, res: Response): Promise<Response> {
+    try {  
+      const id = +req.params.id;
+
+      if (!id) {
+        throw new Error('Product id is required!');
+      }
+
+      await ProductService.destroy(id);
+
+      return res.status(200).json({ message: 'Product deleted' });
     } catch (error: any) {
       console.error({ params: req.body, error });
 
