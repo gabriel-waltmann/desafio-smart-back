@@ -1,6 +1,5 @@
 {
   "name": "desafio-smart-back",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -13,12 +12,16 @@
   "packageManager": "pnpm@10.19.0",
   "dependencies": {
     "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@tsconfig/node23": "^23.0.2",
     "@types/express": "^5.0.4",
     "@types/node": "^24.9.1",
+    "@types/pg": "^8.15.5",
+    "sequelize-cli": "^6.6.3",
     "tsx": "^4.20.6"
   }
 }
